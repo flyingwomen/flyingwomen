@@ -1,0 +1,806 @@
+/**
+ *------
+ * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
+ * BI implementation : © <Your name here> <Your email address here>
+ *
+ * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
+ * See http://en.boardgamearena.com/#!doc/Studio for more information.
+ * -----
+ *
+ * bi.css
+ *
+ * BI stylesheet
+ *
+ */
+
+/*
+    This is the CSS stylesheet of your game User Interface.
+    
+    Styles defined on this file will be applied to the HTML elements you define in your
+    HTML template (bi_bi.tpl), and to HTML elements you create dynamically
+    (in bi.js).
+    
+    Usually, you are using CSS to:
+    
+    1°) define the overall layout of your game
+        (ex: place the board on the top left, place player's hand beside, place the deck on the right, ...).
+
+    2°) create your CSS-sprites:
+        All images of your games should be gathered into a small number of image files. Then, using
+        background-image and background-position CSS properties, you create HTML blocks that can 
+        display these images correctly (see example below).
+    
+    3°) ... anything else:
+        It is really easy to add and remove CSS classes dynamically from your Javascript with
+        dojo.addClass and dojo.removeClass. It is also easy to check if an element has a class
+        (dojo.hasClass) or to get all elements with a specific class (dojo.query). This is why,
+        very often, using CSS classes for the logic of your user interface allow you to do complex
+        thing easily.
+        
+        
+     Note: on the production platform, this file will be compressed and comments will be removed.
+           Consequently, don't hesitate to put as many comments as necessary.
+*/
+
+
+/* Note: you must not use any @import directive */
+
+
+/********* You can start writing your CSS below this line: **********/
+
+/*********  game layout ************
+*******************************************
+********************************************************/
+html {
+    background: url(img/background5.jpg);
+	height: 100%;
+	background-position: top left;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+:root {
+  --board-scale: 0.75;
+  --magnify-scale: 1.5;
+}
+.admin{
+	display:grid;
+	grid-template-columns: 300px auto auto ;
+	grid-template-rows: repeat(2, auto);
+	grid-template-areas: 	"top status ."
+							". mid mid";
+}
+#top {
+	grid-area: top;
+	opacity: 0.7;
+}
+#bonus{
+	transform: scale(var(--board-scale));
+	border-radius: 5px;
+	grid-area: mid;
+}
+#card_stats {
+	max-height: 100px;
+	grid-area:  status;
+	max-width: 300px;
+	justify-self: center;
+}
+#passform{
+	max-width: 500px;
+	grid-area: mid;
+}
+#discard_flex {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	width: 100%;
+	height : max-content;
+}
+#discard{
+	transform: scale(var(--board-scale));
+	overflow: visible;
+    position : relative;
+    height : max-content;
+	border-radius: 5px;
+    z-index:999;
+}
+
+.main_table {
+	margin: auto;
+	height:  627px;
+	width: 962px;
+	background-image: url('img/mainboard.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	display: grid;
+	grid-template-rows: 210px 200px 210px;
+	grid-template-columns: 140px 680px 140px;
+	grid-template-areas: 	". top ."
+							"entrance mid exit"
+							". bottom .";
+}
+
+#table_mid {
+	grid-area: mid;
+	height: 210px;
+	width: 680px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+#entrance_stack{
+	grid-area: entrance;
+}
+#mid_gap {
+	height: 210px;
+	width: 2px;
+}
+#bistro {
+	margin: 1em;
+}
+#exit_stack{
+	grid-area: exit;
+}
+button {
+    border-radius:6px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1em;
+    text-decoration: none;
+    cursor: pointer;
+	width: 5em;
+	margin: 5px;
+}
+#table_top {
+	grid-area: top;
+	height: 210px;
+	width: 610px;
+	display: flex;
+	justify-content: flex-end;
+
+}
+#table_bottom {
+	grid-area: bottom;
+	height: 210px;
+	width: 610px;
+	display: flex;
+	justify-content: flex-end;
+
+}
+#myhand_wrap {
+	height: max-content;
+}
+#player_area_wrapper{
+	margin-top: 5em;
+}
+.playertable {
+	width: 100%;
+	display: block;
+    position: relative;
+    height: 440px;
+}
+.playertablename 
+.cur_playertablecard {
+    font-weight: bold;
+	margin-bottom: 0px;
+}
+/* div for players killed and annexes */
+.playertablecard {
+    display: block;
+    position: relative;
+    height: 405px;
+}
+/********* responsiveness  ************
+*******************************************
+********************************************************/
+@media screen and (min-width: 980px) {
+	max-width: calc(100% - 100px);
+}
+@media screen and (min-width: 1625px) {
+	.outer_wrapper {
+		display: grid; 
+		grid-gap: 1em;
+		grid-template-columns: 972px auto;
+		grid-template-rows:auto 690px auto auto;
+		grid-template-areas:	"discard discard"
+								"table admin"
+								"hand hand"
+								"cur_player cur_player "
+								"players players";
+
+	}
+	#discard{
+		grid-area: discard;
+	}
+	.main_table {
+		margin: 0px;
+		grid-area: table;
+	}
+	test
+	.admin {
+		max-width: 500px;
+		grid-area: admin;
+		grid-template-rows:150px 300px auto ;
+		grid-template-columns: 100%;
+		grid-template-areas: 	"status"
+								"top"
+								"bonus";
+
+	}
+	#top {
+		grid-area: status;
+	}
+	#passform{
+		grid-area: top;
+	}
+	#bonus{
+		grid-area: bonus;
+		align-self: start;
+	}
+	#discard{
+		grid-area: discard;
+	}
+	#myhand_wrap{
+		grid-area: hand;
+	}
+	#current_player_area_wrapper{
+		grid-area: cur_player;
+	}
+
+	#player_area_wrapper{
+		margin-top: auto;
+		grid-area: players;
+	}
+}
+
+@media screen and (min-width: 2100px) {
+	.outer_wrapper {
+		display: grid; 
+		grid-gap: 1em;
+		grid-template-columns: 972px auto;
+		grid-template-rows: repeat( 2, auto) 627px repeat(2, auto) ;
+		grid-template-areas:	"admin admin"
+								"discard discard"
+								"table cur_player"
+								"hand ."
+								"players players";
+
+	}
+	#discard{
+		grid-area: discard;
+	}
+	#current_player_area_wrapper {
+		grid-area: cur_player;
+	}
+	.admin{
+		max-width: 100%;
+		grid-template-columns: 300px auto auto;
+		grid-template-rows: 100px auto;
+		grid-template-areas: 	"top status status"
+								". mid mid";
+	}
+	#top {
+		grid-area: top;
+	}
+	#card_stats {
+		justify-self: left;
+	}
+	#bonus{
+		grid-area: mid;
+	}
+	#passform{
+		grid-area: mid;
+	}
+	.cur_playertablecard {
+		display: flex;
+		flex-direction: column;
+	}
+	#cur_player_kills {
+		width: 100%;
+		height: auto;
+	}
+	.annex {
+		width: 100%;
+
+}
+
+/*********  player panel  ************
+*******************************************
+********************************************************/
+.franc {
+	display: inline-block;
+	margin: 2px;
+    width: 20px; height: 21px;
+    background: url('img/panel_icons.png') -12px -0;
+}
+.check {
+	display: inline-block;
+	margin-left: 52px;
+    width: 41px; height: 20px;
+    background: url('img/panel_icons.png')  -32px -0;
+}
+.cadaver_icon {
+	display: inline-block;
+	margin-left: 52px;
+    width: 12px; height: 21px;
+    background: url('img/panel_icons.png')  -0 -0;
+}
+
+
+/********* common utilities ************
+*******************************************
+********************************************************/
+.overlay {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(128,128,128,0.75); 
+ 
+}
+
+.scale_2{
+	/* transform: scale(var(--magnify-scale)); */
+	/* top: 150px; */
+position: fixed;
+	z-index: 3;
+}
+
+.rotation_1 {
+	transform: rotate(90deg);
+}
+.rotation_2 {
+	transform: rotate(180deg);
+}
+.rotation_3 {
+	transform: rotate(270deg);
+}
+
+.exited:hover {
+	transform: scale(var(--magnify-scale));
+}
+.hide {
+	display: none;
+}
+.display_flex_column {
+	display:flex;
+	flex-direction: column;
+}
+.option_box {
+	margin: 3px;
+	cursor: pointer;
+}
+
+
+/*********  franc board ************
+*******************************************
+********************************************************/
+
+.square {  /* for franc board */
+    width: 10px;
+    height: 10px;
+    position: absolute;
+}
+#franc_board {/* for franc board */
+	height: 240px;
+	width: 530px;
+}
+#board {/* for franc board so square has absolute position */
+	height: 240px;
+	width: 530px;
+	position: relative;
+}
+
+/*****  token **/
+
+.token_0 {
+    position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.token_1 {
+    position: absolute;
+	top: 4px;
+	left: 4px;
+}
+.token_2 {
+    position: absolute;
+	top: 8px;
+	left: 8px;
+}
+.token_3 {
+    position: absolute;
+	top: 12px;
+	left: 12px;
+}
+.token_ffa500 {
+    width: 30px; height: 30px;
+    background: url('img/token.png') -0 -0;
+}
+
+
+.token_ff0000 {
+    width: 30px; height: 30px;
+    background: url('img/token.png') -30px -0;
+}
+
+
+.token_008000 {
+    width: 30px; height: 30px;
+    background: url('img/token.png') -60px -0;
+}
+
+
+.token_0000ff {
+    width: 30px; height: 30px;
+    background: url('img/token.png') -90px -0;
+}
+
+/*********  service token for concierge  ************
+*******************************************
+********************************************************/
+.serviceToken {
+	position: relative;
+	right: 0px;
+	bottome: 0px;
+	z-index: 1;
+}
+.servicetoken_0000ff {
+    width: 69px; height: 35px;
+    background:  url('img/service_token.png') -0 -0;
+}
+
+.servicetoken_008000 {
+    width: 69px; height: 35px;
+    background:  url('img/service_token.png') -69px -0;
+}
+
+.servicetoken_ff0000 {
+    width: 69px; height: 35px;
+    background:  url('img/service_token.png') -138px -0;
+}
+
+.servicetoken_ffa500 {
+    width: 69px; height: 35px;
+    background:  url('img/service_token.png') -207px -0;
+}
+
+/*********  kill  ************
+*******************************************
+********************************************************/
+.killed {
+	width: 29%;
+	height: 90%;
+	display: inline-block;
+	vertical-align:top;
+}
+.kill_flex {
+	display: flex;
+	margin-top: 0px;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: flex-start;
+	width: 100%;
+
+}
+
+/*********  annex ************
+*******************************************
+********************************************************/
+.annex {
+	height: 389px;
+	width: 69%;
+	display: inline-block;
+	vertical-align:top;
+	position: relative;
+}
+.annex_flex {
+	display: flex;
+	margin-top: 0px;
+	width: 100%;
+	height: fit-content;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
+}
+.annexed {
+	width: 139px; height: 210px;
+	flex-shrink: 3;
+}
+.top_card {
+	width: 139px; height: 210px;
+	position: relative;
+	z-index: 20;
+}
+.guest {
+	height: 210px;
+	width: 140px;	
+	background-image: url('img/firstcard.jpg');
+}
+
+@keyframes border-pulsate {
+    0%   { border-color: rgba(240, 240, 240, 1); } 
+    50%  { border-color: rgba(255, 0, 0, 0); }
+    100% { border-color: rgba(240, 240, 240, 1); }
+}
+.select{
+	cursor: pointer;
+}
+
+.pulsate {
+	border: 4px solid grey; 
+    animation: border-pulsate 2s infinite;
+	cursor: pointer;
+}
+/*********  player and neutral rooms ************
+*******************************************
+********************************************************/
+.room_ff0000 {
+	position: relative;
+	height: 212px;
+	width: 141px;	
+	border: 4px solid  rgba(255, 0, 0, 1);
+	
+}
+.room_008000 {
+	position: relative;
+	height: 212px;
+	width: 141px;		
+	border: 4px solid rgba(0, 128, 0, 1);
+	
+}
+
+.room_0000ff {
+	position: relative;
+	height: 212px;
+	width: 141px;			
+	border: 4px solid rgba(0, 0, 255, 1); 
+	
+}
+.room_ffa500 {
+	position: relative;
+	height: 212px;
+	width: 141px;	
+	border: 4px solid rgba(255, 165, 0, 1); 
+}
+.room_773300 {
+	position: relative;
+	height: 212px;
+	width: 141px;	
+	border: 4px solid 773300;
+}
+.room_white {
+	position: relative;
+	height: 212px;
+	width: 141px;	
+	border: 4px solid white; 
+}
+
+
+/********* **************************************** for the cards **********************************************************************************/
+/********* **************************************** for the cards **********************************************************************************/
+/********* **************************************** for the cards **********************************************************************************/
+
+
+
+
+/*********  dead and burried ************
+*******************************************
+********************************************************/
+.burried1 {
+	position: absolute;
+	top: 60px;
+	z-index: 10;
+}
+.burried2 {
+	position: absolute;
+	top: 90px;
+	z-index: 5;
+}
+.burried3 {
+	position: absolute;
+	top: 120px;
+	z-index: 0;
+}
+
+.rank0 {
+    background:  url('img/card.png') -973px -210px;
+}
+
+.rank1 {
+    background:  url('img/card.png') -1112px -210px;
+}
+
+.rank2 {
+    background:  url('img/card.png') -1251px -210px;
+}
+
+.rank3 {
+    background:  url('img/card.png') -1390px -210px;
+}
+
+.rank5 {
+    background:  url('img/card.png') -1529px -210px;
+}
+
+/********* free action to show courspe selected ************
+*******************************************
+********************************************************/
+
+.selected0 {
+    background:  url('img/card.png') -1668px -210px;
+}
+
+.selected1 {
+    background:  url('img/card.png') -1807px -210px;
+}
+
+.selected2 {
+    background:  url('img/card.png') -1946px -210px;
+}
+
+.selected3 {
+    background:  url('img/card.png') -2085px -210px;
+}
+
+.selected5 {
+    background:  url('img/card.png') -2224px -210px;
+}
+.annex_ffa500 {
+	background:  url('img/card.png') -834px -210px;
+}
+
+.annex_0000ff {
+    background:  url('img/card.png') -556px -210px;
+}
+
+.annex_008000 {
+    background:  url('img/card.png') -417px -210px;
+}
+
+.annex_ff0000 {
+    background:  url('img/card.png') -695px -210px;
+}
+
+
+
+/********* the cards ************/
+
+.card {
+    width: 139px; height: 210px;
+}
+.card_back {
+    background: url('img/card.png')  -1529px -210px;
+}
+
+.card_peasant1 {
+	background: url('img/card.png') -12px -220px;
+	height: 180px;
+	width: 130px;
+}
+
+.card_peasant2 {
+    background: url('img/card.png') -150px -220px;
+	height: 180px;
+	width: 130px;
+}
+
+.card_archbishop {
+    background: url('img/card.png') -0 -0;
+}
+
+.card_bishop {
+    background: url('img/card.png') -139px -0;
+}
+
+.card_priest {
+    background: url('img/card.png')  -278px -0;
+}
+
+.card_abbot {
+    background: url('img/card.png') -417px -0;
+}
+
+.card_monk {
+    background: url('img/card.png') -556px -0;
+}
+
+.card_novice {
+    background: url('img/card.png') -695px -0;
+}
+
+.card_major {
+    background: url('img/card.png') -834px -0;
+}
+
+.card_brigadier_chief {
+    background: url('img/card.png') -973px -0;
+}
+
+.card_brigadier {
+    background: url('img/card.png') -1112px -0;
+}
+
+.card_peacekeeper {
+    background: url('img/card.png') -1251px -0;
+}
+
+.card_marquis {
+    background: url('img/card.png') -1390px -0;
+}
+
+.card_prince {
+    background: url('img/card.png') -1529px -0;
+}
+
+.card_duke {
+    background: url('img/card.png') -1668px -0;
+}
+
+.card_count {
+    background: url('img/card.png') -1807px -0;
+}
+
+.card_viscount {
+    background: url('img/card.png') -1946px -0;
+}
+
+.card_baron {
+    background: url('img/card.png') -2085px -0;
+}
+
+.card_brewer {
+    background: url('img/card.png') -2224px -0;
+}
+
+.card_shopkeeper {
+    background: url('img/card.png') -2363px -0;
+}
+
+.card_grocer {
+    background: url('img/card.png') -2502px -0;
+}
+
+.card_concierge {
+    background: url('img/card.png') -2641px -0;
+}
+
+.card_representative {
+    background: url('img/card.png') -2780px -0;
+}
+
+.card_newsboy {
+    background: url('img/card.png') -2919px -0;
+}
+
+.card_butcher {
+    background: url('img/card.png') -3058px -0;
+}
+
+.card_landscaper {
+    background: url('img/card.png') -3197px -0;
+}
+
+.card_gardener {
+    background: url('img/card.png') -3336px -0;
+}
+
+.card_distiller {
+    background: url('img/card.png') -3475px -0;
+}
+
+.card_mechanic {
+    background: url('img/card.png') -3614px -0;
+
+}
+
+.card_cultivator {
+    background: url('img/card.png') -3753px -0;
+}
+
+.card32 {
+    background: url('img/card.png') -278px -210px;
+}
+

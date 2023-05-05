@@ -1,0 +1,7 @@
+readme.txt
+.DS_Store
+.vscode/
+authentication.js
+node_modules
+notes/
+*.bk
